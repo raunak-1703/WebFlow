@@ -9,13 +9,7 @@ const page = async() => {
   return (
     <>
     <div>page</div>
-    <form className='px-10 pt-25' action={async()=>{
-      'use server'
 
-      await signOut({redirectTo:ROUTES.SIGN_IN})
-    }}>
-      <Button type='submit'>Log out</Button>
-    </form>
     </>
     
   )
