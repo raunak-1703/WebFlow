@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Inter, Space_Grotesk } from "next/font/google";
+import { Inter, Space_Grotesk } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
-import Navbar from "@/components/navigation/navbar";
+import { SessionProvider } from "next-auth/react";
+import { auth } from "@/auth";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -23,12 +24,13 @@ export const metadata: Metadata = {
     icon: "/images/site-logo.svg",
   },
 };
-
-export default function RootLayout({
+const RootLayout= async({
   children,
 }: Readonly<{
   children: React.ReactNode;
-}>) {
+}>)=>{
+  const session = await auth();
+
   return (
     <html
       lang="en"
@@ -36,17 +38,20 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
-        <ThemeProvider
+        <SessionProvider session={session}>
+          <ThemeProvider
             attribute="class"
             defaultTheme="system"
             enableSystem
             disableTransitionOnChange
           >
-            <Navbar/>
             {children}
           </ThemeProvider>
-        <Toaster position="top-right" richColors />
+          <Toaster position="top-center" richColors />
+        </SessionProvider>
       </body>
     </html>
   );
 }
+
+export default RootLayout
