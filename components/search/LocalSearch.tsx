@@ -24,6 +24,7 @@ const LocalSearch = ({route,imgSrc,placeholder,otherClasses}:Props) => {
     useEffect(()=>{
         const delayDebounceFn = setTimeout(()=>{
             if(searchQuery){
+                if(searchQuery!==query){
                 const newUrl = formUrlQuery({
                     params:searchParams.toString(),
                     key:"query",
@@ -31,13 +32,16 @@ const LocalSearch = ({route,imgSrc,placeholder,otherClasses}:Props) => {
                 });
 
                 router.push(newUrl,{scroll:false})
+            }
             }else{
                 if(pathname===route){
+                    if (query !== "") {
                     const newUrl = removeKeysFromUrlQuery({
                         params:searchParams.toString(),
                         keysToRemove:['query']
                     })
                     router.push(newUrl,{scroll:false})
+                }
                 }
             }
         },300)
