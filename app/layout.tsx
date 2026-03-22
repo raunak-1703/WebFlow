@@ -24,11 +24,11 @@ export const metadata: Metadata = {
     icon: "/images/site-logo.svg",
   },
 };
-const RootLayout= async({
+const RootLayout = async ({
   children,
 }: Readonly<{
   children: React.ReactNode;
-}>)=>{
+}>) => {
   const session = await auth();
 
   return (
@@ -37,6 +37,13 @@ const RootLayout= async({
       className={`${inter.className} ${spaceGrotesk.variable} antialiased`}
       suppressHydrationWarning
     >
+      <head>
+        <link
+          rel="stylesheet"
+          type="text/css"
+          href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css"
+        />
+      </head>
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
         <SessionProvider session={session}>
           <ThemeProvider
@@ -52,6 +59,6 @@ const RootLayout= async({
       </body>
     </html>
   );
-}
+};
 
-export default RootLayout
+export default RootLayout;
