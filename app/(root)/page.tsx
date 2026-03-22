@@ -1,3 +1,4 @@
+import QuestionCard from "@/components/cards/QuestionCard";
 import HomeFilter from "@/components/filters/HomeFilter";
 import LocalSearch from "@/components/search/LocalSearch";
 import { Button } from "@/components/ui/button";
@@ -14,7 +15,11 @@ const questions = [
       { _id: "1", name: "React" },
       { _id: "2", name: "JavaScript" },
     ],
-    author: { _id: "1", name: "John Doe" },
+    author: {
+      _id: "1",
+      name: "John Doe",
+      image: "https://avatars.githubusercontent.com/u/214462285?v=4",
+    },
     upvotes: 10,
     answers: 5,
     views: 100,
@@ -28,7 +33,11 @@ const questions = [
       { _id: "1", name: "JavaScript" },
       { _id: "2", name: "JavaScript" },
     ],
-    author: { _id: "1", name: "John Doe" },
+    author: {
+      _id: "1",
+      name: "John Doe",
+      image: "https://avatars.githubusercontent.com/u/214462285?v=4",
+    },
     upvotes: 10,
     answers: 5,
     views: 100,
@@ -40,15 +49,21 @@ interface SearchParams {
   searchParams: Promise<{ [key: string]: string }>;
 }
 
-const Home = async ({searchParams}:SearchParams) => {
+const Home = async ({ searchParams }: SearchParams) => {
   const { query = "", filter = "" } = await searchParams;
 
-  const filteredQuestions = questions.filter((question)=>{
-    const matchesQuery = question.title.toLowerCase().includes(query.toLowerCase());
-    const matchesFilter = filter?question.tags.some((tag) => tag.name.toLowerCase() === filter.toLowerCase()):true
+  const filteredQuestions = questions.filter((question) => {
+    const matchesQuery = question.title
+      .toLowerCase()
+      .includes(query.toLowerCase());
+    const matchesFilter = filter
+      ? question.tags.some(
+          (tag) => tag.name.toLowerCase() === filter.toLowerCase(),
+        )
+      : true;
 
-    return matchesQuery && matchesFilter
-  })
+    return matchesQuery && matchesFilter;
+  });
   return (
     <>
       <section className="w-full flex flex-col-reverse justify-between sm:flex-row sm:items-center">
@@ -62,16 +77,16 @@ const Home = async ({searchParams}:SearchParams) => {
       </section>
       <section className="mt-11">
         <LocalSearch
-          route='/'
+          route="/"
           imgSrc="/icons/search.svg"
           placeholder="Search questions..."
           otherClasses="flex-1"
         />
       </section>
-      <HomeFilter/>
+      <HomeFilter />
       <div className="mt-10 flex w-full flex-col gap-6">
-        {filteredQuestions.map((question)=>(
-          <h1 key={question._id}>{question.title}</h1>
+        {filteredQuestions.map((question) => (
+          <QuestionCard key={question._id} question={question} />
         ))}
       </div>
     </>
