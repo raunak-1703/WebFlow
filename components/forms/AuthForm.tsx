@@ -33,7 +33,7 @@ const AuthForm = <T extends FieldValues>({
   onSubmit,
 }: AuthFormProps<T>) => {
   const form = useForm<T>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(schema as any),
     defaultValues: defaultValues as DefaultValues<T>,
   });
 
@@ -68,6 +68,8 @@ const AuthForm = <T extends FieldValues>({
                   type={field === "password" ? "password" : "text"}
                   aria-invalid={fieldState.invalid}
                   id={field}
+                  required
+                  className="paragraph-regular background-light900_dark300 light-border-2 text-dark300_light700 no-focus min-h-12 rounded-1.5 border"
                 />
 
                 {fieldState.error && (
