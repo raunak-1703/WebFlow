@@ -4,8 +4,6 @@ import {
   SheetClose,
   SheetContent,
   SheetDescription,
-  SheetFooter,
-  SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
@@ -29,20 +27,21 @@ const MobileNavigation = () => {
       </SheetTrigger>
       <SheetContent className="background-light900_dark200 border-none p-4" side='left'>
           <SheetTitle className="hidden">Navigation</SheetTitle>
+          <SheetDescription className="sr-only">
+            Mobile navigation links and authentication actions.
+          </SheetDescription>
           <Link href='/' className="flex items-center gap-1">
           <Image src ='/images/site-logo.svg' width={23} height={23} alt="Logo"/>
           <p className="h2-bold font-space-grotesk text-dark-100 dark:text-light-900">Web<span className="text-primary-500">Flow</span></p>
           </Link>
 
-          <div className="no-scrollbar flex h-[calc(100vh-80px)] flex-col justify-betweeen overflow-y-auto">
-            <SheetClose asChild>
-                <section className="flex h-full flex-col gap-6 pt-16">
-                    <NavLinks isMobileNav/>
-                </section>
-            </SheetClose>
+          <div className="no-scrollbar flex min-h-0 flex-1 flex-col overflow-y-auto pt-16">
+            <section className="flex flex-col gap-6">
+              <NavLinks isMobileNav />
+            </section>
           </div>
 
-          <div className="flex flex-col gap-3">
+          <div className="flex shrink-0 flex-col gap-3">
             <SheetClose asChild>
                 <Link href={ROUTES.SIGN_IN}>
                 <Button className="small-medium btn-secondary  w-full rounded-lg shadow-none cursor-pointer px-4 py-3">
