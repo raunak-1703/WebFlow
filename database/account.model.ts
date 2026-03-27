@@ -16,7 +16,6 @@ const accountSchema = new Schema({
     password:{type:String},
     provider:{type:String,required:true},
     providerAccountId:{type:String,required:true}
-
 },{timestamps:true})
 
 const Account = models?.Account || model<IAccount>("Account",accountSchema)
