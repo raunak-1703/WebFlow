@@ -3,8 +3,9 @@ import HomeFilter from "@/components/filters/HomeFilter";
 import LocalSearch from "@/components/search/LocalSearch";
 import { Button } from "@/components/ui/button";
 import ROUTES from "@/constants/routes";
+import { api } from "@/lib/api";
 import handleError from "@/lib/handler/error";
-import dbConnect from "@/lib/mongoose";
+import { APIErrorResponse } from "@/types/global";
 import Link from "next/link";
 import React from "react";
 
@@ -47,6 +48,13 @@ const questions = [
   },
 ];
 
+const test = async()=>{
+  try {
+    return await api.users.getByEmail('raunak@test.com')
+  } catch (error) {
+    return handleError(error,'api') as unknown as APIErrorResponse
+  }
+}
 
 interface SearchParams {
   searchParams: Promise<{ [key: string]: string }>;
@@ -54,7 +62,8 @@ interface SearchParams {
 
 const Home = async ({ searchParams }: SearchParams) => {
   const { query = "", filter = "" } = await searchParams;
-
+  const users =await test();
+  console.log(users)
   const filteredQuestions = questions.filter((question) => {
     const matchesQuery = question.title
       .toLowerCase()
