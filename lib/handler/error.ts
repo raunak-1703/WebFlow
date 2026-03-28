@@ -26,15 +26,18 @@ const formatResponse = (
 
 const handleError = (error:unknown,responseType:ResponseType='server')=>{
     if(error instanceof RequestError){
-
-      logger.error({err:error},`${responseType.toUpperCase()} Error:${error.message}`)
-        return formatResponse(
-            responseType,
-            error.statusCode,
-            error.message,
-            error.errors
-        )
-    }
+    const errorPrefix = error.name === "ValidationError" 
+      ? "Validation Error" 
+      : `${responseType.toUpperCase()} Error`;
+    logger.error({err:error}, `${errorPrefix}: ${error.message}`)
+    
+    return formatResponse(
+        responseType,
+        error.statusCode,
+        error.message,
+        error.errors
+    )
+}
 
     if(error instanceof ZodError){
         const validationError = new ValidationError(error.flatten().fieldErrors as Record<string,string[]>);
