@@ -2,6 +2,7 @@ import { IUser } from "@/database/user.model";
 import { fetchHandler } from "./handler/fetch";
 import { stringify } from "querystring";
 import { IAccount } from "@/database/account.model";
+import ROUTES from "@/constants/routes";
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3000/api";
 
@@ -29,6 +30,7 @@ export const api = {
         method: "DELETE",
       }),
   },
+
   accounts: {
     getAll: () => fetchHandler(`${API_BASE_URL}/accounts`),
     getById: (id: string) => fetchHandler(`${API_BASE_URL}/accounts/${id}`),
@@ -52,4 +54,11 @@ export const api = {
         method: "DELETE",
       }),
   },
+
+  auth:{
+    oAuthSignIn:({user,provider,providerAccountId}:SignInWithOAuthParams)=>fetchHandler(`${API_BASE_URL}/auth/${ROUTES.SIGN_IN_WITH_OAUTH}`,{
+      method:"POST",
+      body:JSON.stringify({user,provider,providerAccountId})
+    })
+  }
 };
